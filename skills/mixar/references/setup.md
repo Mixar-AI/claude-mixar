@@ -7,6 +7,7 @@ Installation, MCP availability and scene readiness are separate states. Check ea
 Download Mixar from https://www.mixar.app and open it once.
 
 - macOS: move `Mixar.app` to `/Applications` or `~/Applications`.
+- Windows: run Mixar's installer, then open Mixar once so it writes `%USERPROFILE%\.mixar\connector\mixar-mcp.cmd`.
 - Linux: Mixar is a portable archive with no fixed folder. Open Mixar once so it writes its launcher.
 
 Mixar updates itself; the plugin never downloads or updates Mixar.
@@ -18,7 +19,7 @@ Mixar updates itself; the plugin never downloads or updates Mixar.
 3. The status line should read "MCP is on · AI apps can connect to this Mixar". If it says MCP is off, click **Turn on**.
 4. Optional: switch on **Let AI apps control Mixar's interface**. Through this plugin Claude can then look at Mixar's interface (`mixar_ui_observe`, `mixar_ui_wait`), but `mixar_ui_act`, which clicks and types, is not offered, because the interface includes Mixar's image and video generators.
 
-Mixar writes the launcher this plugin starts, `~/.mixar/connector/mixar-mcp`, while it runs; with MCP off the launcher only answers that MCP is turned off. If that file is missing after these steps, quit and reopen Mixar.
+Mixar writes the launcher this plugin starts, `~/.mixar/connector/mixar-mcp` (on Windows, `%USERPROFILE%\.mixar\connector\mixar-mcp.cmd`), while it runs; with MCP off the launcher only answers that MCP is turned off. If that file is missing after these steps, quit and reopen Mixar.
 
 ## 3. Reconnect in Claude Code
 

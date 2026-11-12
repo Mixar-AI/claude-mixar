@@ -1,0 +1,100 @@
+{
+  "date": "2026-11-12",
+  "run_id": "20261112-120801-rajmixar.app-task-2023-hide-media-gen",
+  "platform": "win32",
+  "claude_version": "2.1.322 (Claude Code)",
+  "client_commit": "fd99da9c473217b60b7597272b0acb2329ebe600",
+  "harness_base_commit": "ac40d49f5c2ba0f47377ce7664ac0b198b3f65dd",
+  "scenario": "scenarios/claude_plugin_e2e.py (uncommitted addition)",
+  "plugin_base_commit": "155cd2d",
+  "plugin_changes": [
+    "scripts/mixar-mcp.cmd",
+    ".gitattributes"
+  ],
+  "tested_file_sha256": {
+    ".mcp.json": "a1610e096be00dead1285314419b52f715e588ce5859be94a4cb087f389af049",
+    ".gitattributes": "3f3ab64b620a447d8b7e3a4a034938ab86ddb9e8b0a7c81a16fc3e723f4a3397",
+    "scripts/mixar-mcp": "45cc5b69bcda4682d882be965e46bef542e12d6b73d797423e83c10cffcf91e9",
+    "scripts/mixar-mcp.cmd": "9a3a5d03b7f50fccde3ccb0cb416b6d62629616bed5e6acc7606616c2cce96aa"
+  },
+  "backend_url": "https://uat8.mixar.app",
+  "results": [
+    {
+      "case": "01-startup_health",
+      "result": "PASS",
+      "seconds": 34
+    },
+    {
+      "case": "02-claude_plugin_e2e",
+      "result": "PASS",
+      "seconds": 38
+    }
+  ],
+  "plugin_validation": "passed; non-blocking marketplace-install advice",
+  "claude_mcp_list": "Connected",
+  "plugin_session": {
+    "tool_count": 75,
+    "valid_job_types": [
+      "hunyuan_part",
+      "hunyuan_rapid",
+      "hunyuan_uv",
+      "image_to_3d",
+      "layer_mask",
+      "mat_gen",
+      "model_3d",
+      "retopology",
+      "tripo_retarget",
+      "tripo_rig",
+      "tripo_segment",
+      "tripo_smart_segment",
+      "tripo_texture",
+      "tripo_uv",
+      "world_labs"
+    ],
+    "ui_act_listed": false,
+    "media_in_descriptions": {},
+    "untitled": [],
+    "instructions_mention_videos": false
+  },
+  "old_mixar": {
+    "exit": 1,
+    "stdout": "",
+    "stderr": "mixar-mcp: this Mixar version cannot run with Claude yet.\nUpdate Mixar to the latest version and open it once. Then reconnect the server\nfrom /mcp in Claude Code.\n"
+  },
+  "claude_mcp_list_old": "Failed to connect — CONNECTION_CLOSED: Connection closed",
+  "missing_launcher": {
+    "exit": 1,
+    "stdout": "",
+    "stderr_has_path_and_setup_guidance": true
+  },
+  "preferences_before": {
+    "mcp_enabled": false,
+    "mcp_ui_control": false
+  },
+  "preferences_restored": {
+    "mcp_enabled": false,
+    "mcp_ui_control": false
+  },
+  "process_watch": {
+    "watched": false,
+    "stray": null,
+    "note": "psutil not installed"
+  },
+  "mcp_shutdown": {
+    "returncode": 0,
+    "errors": [],
+    "notifications": [],
+    "connector_files": [
+      "tools-no-media.json"
+    ]
+  },
+  "visual_review": "Both Connect MCP screenshots show MCP on and AI apps able to connect; dialog and controls visible.",
+  "limitations": [
+    "No model-driven Claude session",
+    "No Cowork session",
+    "No Linux plugin run",
+    "No generation or billing test in this scenario",
+    "Shared QA development build, not a released Mixar installer"
+  ],
+  "qa_lane_released": true
+}

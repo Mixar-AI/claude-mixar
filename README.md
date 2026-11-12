@@ -4,16 +4,18 @@ Connect Claude to [Mixar](https://www.mixar.app), the AI-native 3D editor built 
 
 The plugin has two parts:
 
-- `.mcp.json` starts the MCP server that the Mixar desktop app installs for the signed-in user, through `scripts/mixar-mcp`.
+- `.mcp.json` starts the MCP server that the Mixar desktop app installs for the signed-in user, through `scripts/mixar-mcp` (`scripts/mixar-mcp.cmd` on Windows).
 - `skills/mixar` teaches Claude the Mixar workflow: check that Mixar is ready, read the scene, build in small steps, verify each change with a render, and deliver.
 
 ## Requirements
 
-- The Mixar desktop app on macOS (Linux is expected to work but is not yet verified; Windows is not supported yet), with a Mixar account signed in and **Connect MCP** turned on. Both are done once in Mixar's interface.
+- The Mixar desktop app on macOS or Windows (Linux is expected to work but is not yet verified), with a Mixar account signed in and **Connect MCP** turned on. Both are done once in Mixar's interface.
 - Claude running on the same computer as Mixar: Claude Code (terminal, IDE extensions or the desktop app's Code tab), or a Cowork session that runs on your computer. Chat on claude.ai, in the desktop app and on mobile does not start local MCP servers, so it cannot use this plugin.
 - An internet connection: Mixar's tools run through Mixar's backend under your account.
 
 You do not need a Mixar API key, a token or a separate Python or Node.js installation. The launcher runs on the Python that ships inside Mixar.
+
+The plugin currently requires the development build from [client PR #2078](https://github.com/Mixar-AI/mixar-texture-painting/pull/2078) and a backend with [PR #2024](https://github.com/Mixar-AI/mixar-backend/pull/2024). The installed Mixar 4.4.3 release lacks the required media-generation restriction and the plugin refuses to start with it. See [Verification](VERIFICATION.md) for the tested builds and release limitation.
 
 ## Set up
 
@@ -53,7 +55,7 @@ The live tool list comes from the running Mixar app and can change between Mixar
 
 Read this before installing.
 
-- **Runs a program from the installed Mixar app.** `scripts/mixar-mcp` is a short shell script that runs `~/.mixar/connector/mixar-mcp`, a launcher the Mixar desktop app writes for the current user. That launcher runs Mixar's bundled MCP server on Mixar's embedded Python. The plugin itself contains no compiled code, installs no packages and downloads nothing.
+- **Runs a program from the installed Mixar app.** `scripts/mixar-mcp` is a short shell script that runs `~/.mixar/connector/mixar-mcp`, a launcher the Mixar desktop app writes for the current user. On Windows, `scripts/mixar-mcp.cmd` runs `%USERPROFILE%\.mixar\connector\mixar-mcp.cmd`. That launcher runs Mixar's bundled MCP server on Mixar's embedded Python. The plugin itself contains no compiled code, installs no packages and downloads nothing.
 - **Runs Python inside Mixar.** `execute_bpy_script` and other scene tools run Python in the Mixar process with your user account's privileges. Mixar blocks some modules in these scripts, but a loopback connection is not a security sandbox.
 - **Can start Mixar.** A tool call made while Mixar is closed may open the installed Mixar app, and Mixar stays open after Claude exits. Listing tools never starts Mixar.
 - **Talks to Mixar over loopback, and Mixar talks to its backend.** The launcher connects to the desktop app on `127.0.0.1` with a per-launch token. The desktop app forwards tool calls to Mixar's backend (`api.mixar.app`) under your signed-in account.
@@ -86,9 +88,11 @@ This plugin is an adapter: it stores no data and sends nothing itself. Everythin
 
 | Platform | Status | Launcher the plugin starts |
 |----------|--------|----------------------------|
-| macOS | Supported | `~/.mixar/connector/mixar-mcp` |
+| macOS | Verified in Claude Code with the development build above | `~/.mixar/connector/mixar-mcp` |
 | Linux | Expected to work, not yet verified | `~/.mixar/connector/mixar-mcp` (written when Mixar first runs) |
-| Windows | Not supported yet | — |
+| Windows | Verified in Claude Code with the development build above | `%USERPROFILE%\.mixar\connector\mixar-mcp.cmd` |
+
+The same `.mcp.json` works on both verified platforms. Claude Code 2.1.322 resolves the extensionless `scripts/mixar-mcp` command to its `.cmd` counterpart on Windows.
 
 ## License
 

@@ -1,6 +1,32 @@
 # Verification
 
-Run on 2026-11-12 on macOS (Apple Silicon) with Mixar 4.4.3 (`/Applications/Mixar.app`) signed in, and Claude Code 2.1.322.
+## Current plugin: macOS and Windows
+
+Verified on 2026-11-12 with Claude Code 2.1.322 and the development Mixar build containing the media-generation restriction. The macOS run passed in the original session; the Windows run completed after resuming it.
+
+Windows run: `20261112-120801-rajmixar.app-task-2023-hide-media-gen`, client `fd99da9c473217b60b7597272b0acb2329ebe600`, backend `https://uat8.mixar.app`, harness base `ac40d49f5c2ba0f47377ce7664ac0b198b3f65dd` plus the new `scenarios/claude_plugin_e2e.py`. The plugin used base `155cd2d` plus the Windows launcher and its line-ending declaration.
+
+| Check | macOS | Windows |
+|---|---|---|
+| `claude plugin validate` | Passed | Passed; non-blocking advice to add a marketplace install command once available |
+| `claude --plugin-dir <plugin> mcp list` | Connected | Connected; extensionless command resolves to the `.cmd` launcher |
+| Plugin command over MCP stdio | 75 tools | 75 tools |
+| Media-free tool list, descriptions and instructions; 3D job types retained; every tool titled | Passed | Passed |
+| `mixar_ui_act` absent | Passed | Passed |
+| Older Mixar installation record | Exit 1 with update guidance; Claude reports failed connection | Same |
+| Missing Mixar launcher | Exit 1 with path and setup guidance | Same |
+| MCP remains ready; preferences restored afterwards | Passed | Passed |
+| Separate startup smoke test | Not part of this plugin run | Passed (34 s) |
+
+The Windows plugin scenario took 38 s. It used a private Claude config directory and an isolated QA app; no Claude sign-in, model turn or generation was needed. The QA lane was released afterwards. The optional process watcher was unavailable on Windows because `psutil` was not installed; launcher discovery and installation records were still isolated, with auto-start disabled. The MCP process exited cleanly.
+
+The Connect MCP screenshots were visually checked before and after the run: both show “MCP is on · AI apps can connect to this Mixar”, with the dialog and controls visible. Retained evidence: [Windows results](docs/qa/2026-11-12/windows-plugin.json), [before](docs/qa/2026-11-12/windows-connect-before.png), [after](docs/qa/2026-11-12/windows-connect-after.png).
+
+This verifies the local plugin connection and tool surface. A model-driven Claude session, Cowork, Linux plugin loading and the submission portal checks remain untested. Release support still depends on shipping the client/backend changes below.
+
+## Initial baseline (before the capability check)
+
+The following baseline was run on 2026-11-12 on macOS (Apple Silicon) with installed Mixar 4.4.3 (`/Applications/Mixar.app`) signed in, and Claude Code 2.1.322. It does not describe the current plugin against that release: the capability check now rejects it.
 
 ## Packaging
 
@@ -45,7 +71,7 @@ The command from `.mcp.json`, with `${CLAUDE_PLUGIN_ROOT}` expanded and no `MIXA
 
 ## Open findings
 
-Both findings from the first run are being closed in Mixar itself (Mixar-AI/mixar-backend#2024, Mixar-AI/mixar-texture-painting#2078, tracked in Mixar-AI/mixar-backend#2023):
+Both findings from the first run are implemented and verified in the development builds (Mixar-AI/mixar-backend#2024, Mixar-AI/mixar-texture-painting#2078, tracked in Mixar-AI/mixar-backend#2023); a release containing them is still required:
 
 - Tool `title`s (policy 5.E): every Mixar tool gets a `title` and `annotations.title`, for every MCP client.
 - AI image and video generation (policy 4.B): with `MIXAR_MCP_HIDE_MEDIA_GENERATION=1`, which `.mcp.json` sets, Mixar leaves `image_gen`, `depth_to_image`, `video_gen`, `video_upscale` and `brush_gen` out of its tools, descriptions and guide, refuses them (including from scripts), and does not offer `mixar_ui_act`. The script above refuses to start with a Mixar that predates this, so the plugin never runs with media generation available.
@@ -56,6 +82,6 @@ Until the Mixar release that carries those changes ships, the plugin does not st
 
 - A model-driven Claude Code session using the skill and the tools.
 - A Cowork session on this computer.
-- Linux and Windows. Windows is not supported: `.mcp.json` names the POSIX script.
+- Linux plugin loading. The Windows plugin passed the current test above.
 - Signed out, MCP turned off, and several Mixar apps open at once through this plugin. The launcher's handling of these states is shared with the Hermes and OpenAI packages, where it was tested.
 - The developer portal's **Validate** and security scan.
