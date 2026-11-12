@@ -1,0 +1,23 @@
+{
+  "name": "mixar",
+  "displayName": "Mixar",
+  "icon": "./assets/icon.png",
+  "version": "0.1.0",
+  "description": "Build, edit, texture, rig, render and export 3D scenes and game-ready assets in the Mixar desktop app from Claude Code. Starts the MCP server that Mixar installs for the signed-in user and adds a Mixar workflow skill. Requires the Mixar desktop app on the same computer, signed in with Connect MCP turned on.",
+  "author": {
+    "name": "Mixar",
+    "email": "support@mixar.app",
+    "url": "https://www.mixar.app"
+  },
+  "homepage": "https://www.mixar.app",
+  "repository": "https://github.com/Mixar-AI/claude-mixar",
+  "license": "MIT AND LicenseRef-Mixar-Brand",
+  "keywords": [
+    "mixar",
+    "3d",
+    "blender",
+    "game-dev",
+    "modeling",
+    "local"
+  ]
+}

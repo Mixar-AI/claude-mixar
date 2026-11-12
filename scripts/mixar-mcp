@@ -1,0 +1,20 @@
+#!/bin/sh
+# Start the MCP launcher that the Mixar desktop app installs for the current
+# user. stdout carries MCP messages only; every message here goes to stderr.
+# MIXAR_MCP_LAUNCHER, when set, names another launcher (a development or QA
+# build of Mixar). Leave it unset for normal use.
+
+if [ -z "$HOME" ] && [ -z "$MIXAR_MCP_LAUNCHER" ]; then
+    echo "mixar-mcp: HOME is not set, so Mixar's launcher cannot be found." >&2
+    exit 1
+fi
+launcher="${MIXAR_MCP_LAUNCHER:-$HOME/.mixar/connector/mixar-mcp}"
+
+if [ ! -x "$launcher" ]; then
+    echo "mixar-mcp: Mixar's MCP launcher was not found at $launcher." >&2
+    echo "Install Mixar from https://www.mixar.app, open it, sign in, and turn on" >&2
+    echo "profile menu > Connect MCP. Then reconnect the server from /mcp in Claude Code." >&2
+    exit 1
+fi
+
+exec "$launcher" "$@"

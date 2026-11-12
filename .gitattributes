@@ -1,0 +1,2 @@
+# The POSIX launcher must keep LF line endings.
+scripts/mixar-mcp text eol=lf
