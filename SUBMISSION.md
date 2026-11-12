@@ -17,7 +17,7 @@ Official instructions: https://claude.com/docs/plugins/submit.
 | Support / review contact | support@mixar.app |
 | Privacy policy | https://www.mixar.app/legal/privacy-policy |
 | Documentation | This repository's README and `skills/mixar/references/setup.md` |
-| Icon | `assets/icon.png` |
+| Icon | The bundled Mixar icon declared in the manifest |
 
 Connect a GitHub account with write access, and allow the Claude GitHub App
 to read this repository if the portal requires it. The repository is public
@@ -25,8 +25,45 @@ as of 2026-11-12, so no visibility change is needed before publication.
 
 Click **Validate**. Fix all blocking findings and validate again after each
 push: validation applies to one commit. The launcher calls Mixar's installed
-program, so a manual-review hold for scripts the validator cannot follow is
-possible. Local CLI validation is not the portal/security scan.
+program, so the portal holds it for manual review. Local CLI validation is not
+the portal/security scan.
+
+## Current portal findings
+
+The repository error is resolved: the portal now reports name/publisher checks
+passed and produces policy findings. A policy hold permits submission for review
+but is not approval to publish.
+
+- Image references: evidence images are displayed with Markdown image syntax;
+  they are not executable and neither launcher references them. Re-validation
+  must confirm whether this clears the three image findings.
+- Scripts the validator could not follow: expected for the disclosed handoff to
+  Mixar's installed launcher. Retained for review; removing it would remove the
+  plugin's connection to Mixar.
+- Verified organization: the portal identifies this organization as unverified.
+  Its informational notices say local servers/scripts are not refused yet, but
+  describe future Verified-only acceptance. Ask the reviewer to confirm the
+  organization's eligibility and verification requirements before publication.
+- Fixed environment setting: moved from the MCP configuration into both
+  launcher scripts, as the portal recommends. It remains forced on.
+- Explicit interpreter: the extensionless command is retained because it was
+  tested on macOS and Windows, where Claude Code selects the CMD counterpart.
+  Switching it to `sh` would change the tested Windows startup path.
+- The icon field is intentional for the listing; the portal says no action is
+  needed. Local-server availability and image-pass notices are informational.
+- A separate directory-links finding was mentioned but its wording was not
+  provided. Check it if it recurs; no listing URL has been invented.
+
+Reviewer note:
+
+> Mixar is an installed desktop 3D editor. This plugin's readable launchers start
+> the MCP launcher installed by Mixar for the current user; they install no
+> packages and download no code. They require Mixar's media-restriction capability
+> and force that restriction on. The bundled images are documentation and branding
+> only; no script executes them. Our portal currently marks the organization as
+> unverified. Please confirm eligibility and the organization-verification steps
+> required for this local MCP integration. Publication is also pending the planned
+> Mixar release containing the required capability.
 
 ## Data handling answers
 
@@ -73,10 +110,10 @@ the planned release is published.
 - Production deployment and a supported released installer are still pending.
   Released Mixar 4.4.3 does not carry the required capability.
 - Minimum supported installer version / link: **pending the next release**.
-- Portal validation: first attempt stopped with “Couldn’t validate that repository”.
-  Content-rewriting `.gitattributes` rules were removed; select **Re-validate**
-  on the Source step with branch `main` and the plugin path left blank (root).
-  Security scan and completed submission remain unconfirmed.
+- Portal validation now completes with policy holds and informational notices
+  described above. Select **Re-validate** on the Source step after fixes, using
+  branch `main` and a blank plugin path. Security scan and completed submission
+  remain unconfirmed.
 - Keep automatic publishing off until the released app/backend have been
   verified together. Review the contact, data handling and compliance answers
   before **Submit for review**. Passing checks is separate from **Publish**.

@@ -3,10 +3,7 @@
     "mixar": {
       "type": "stdio",
       "command": "${CLAUDE_PLUGIN_ROOT}/scripts/mixar-mcp",
-      "args": [],
-      "env": {
-        "MIXAR_MCP_HIDE_MEDIA_GENERATION": "1"
-      }
+      "args": []
     }
   }
 }

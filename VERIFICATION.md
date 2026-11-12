@@ -14,7 +14,25 @@ and stage with `git -c core.autocrlf=false add --renormalize scripts/mixar-mcp s
 The tracked tree was also checked for invalid UTF-8, unsupported path characters,
 trailing dots/spaces, Windows device names, case collisions, symlinks, submodules,
 and LFS pointers; none were found. Local and remote refs contain no replace refs.
-Portal re-validation is still required against the corrected commit.
+The subsequent portal report confirms the repository now validates and reaches
+policy review. Name/publisher checks passed; script and image policy holds were
+reported. See [submission notes](SUBMISSION.md) for the findings and reviewer note.
+
+## Portal finding cleanup (2026-11-12)
+
+Evidence images now use Markdown image syntax; no launcher executes an image.
+Both launchers now set the fixed media-restriction variable themselves, and the
+MCP configuration no longer declares that environment variable. The extensionless
+command and capability guard are retained.
+
+Focused macOS launcher checks passed: an inherited restriction value of `0` is
+overridden to `1`; default and override paths, paths/arguments with spaces, child
+exit status, missing launcher, and old/missing capability records behave as
+expected. Shell syntax and local directory validation pass. The Windows script
+preserves CRLF and receives the equivalent fixed setting after `setlocal`.
+A fresh Windows execution check could not run: the shared QA lane is held by the
+Blender 5.3 build/GUI QA task. The earlier Windows end-to-end result below predates
+this small launcher change. Portal re-validation of this cleanup is pending.
 
 ## Current plugin: macOS and Windows
 
@@ -36,9 +54,13 @@ Windows run: `20261112-120801-rajmixar.app-task-2023-hide-media-gen`, client `fd
 
 The Windows plugin scenario took 38 s. It used a private Claude config directory and an isolated QA app; no Claude sign-in, model turn or generation was needed. The QA lane was released afterwards. The optional process watcher was unavailable on Windows because `psutil` was not installed; launcher discovery and installation records were still isolated, with auto-start disabled. The MCP process exited cleanly.
 
-The Connect MCP screenshots were visually checked before and after the run: both show “MCP is on · AI apps can connect to this Mixar”, with the dialog and controls visible. Retained evidence: [Windows results](docs/qa/2026-11-12/windows-plugin.json), [before](docs/qa/2026-11-12/windows-connect-before.png), [after](docs/qa/2026-11-12/windows-connect-after.png).
+The Connect MCP screenshots were visually checked before and after the run: both show “MCP is on · AI apps can connect to this Mixar”, with the dialog and controls visible. Retained evidence: [Windows results](docs/qa/2026-11-12/windows-plugin.json).
 
-This verifies the local plugin connection and tool surface. Cowork, Linux plugin loading and the submission portal checks remain untested. Release support still depends on shipping the client/backend changes below.
+![Connect MCP before the Windows test](docs/qa/2026-11-12/windows-connect-before.png)
+
+![Connect MCP after the Windows test](docs/qa/2026-11-12/windows-connect-after.png)
+
+This verifies the local plugin connection and tool surface. Cowork and Linux plugin loading remain untested. Portal validation now reaches policy review; see the findings below. Release support still depends on shipping the client/backend changes below.
 
 ## Real Claude workflow
 
@@ -63,8 +85,9 @@ The QA preferences were restored and the owned app was stopped.
 
 Both hero renders and the final app screenshot were visually checked. The
 slats and diagonal braces are visible, and the new scene is separate from
-the original. [Preview](docs/qa/2026-11-12/claude-crate-preview.jpg) ·
-[Results](docs/qa/2026-11-12/claude-workflow.json).
+the original. [Results](docs/qa/2026-11-12/claude-workflow.json).
+
+![Rendered crate from the Claude workflow](docs/qa/2026-11-12/claude-crate-preview.jpg)
 
 Two earlier attempts are retained locally: the first excluded the plugin
 server through an empty strict MCP config; the second completed the export
@@ -82,7 +105,7 @@ The following baseline was run on 2026-11-12 on macOS (Apple Silicon) with insta
 |---|---|
 | `claude plugin validate .` | Passed |
 | `claude plugin validate . --profile directory` | Passed, nothing to report |
-| Listing icon | `assets/icon.png`, the shipped Mixar app icon, 1024 × 1024 PNG with transparency |
+| Listing icon | The shipped Mixar app icon, 1024 × 1024 PNG with transparency |
 | Layout | No top-level `bin/`; the server command is `${CLAUDE_PLUGIN_ROOT}/scripts/mixar-mcp` with no other variable, no shell wrapper and no package launcher |
 
 ## Claude Code
@@ -122,7 +145,7 @@ The command from `.mcp.json`, with `${CLAUDE_PLUGIN_ROOT}` expanded and no `MIXA
 Both findings from the first run are implemented, verified and merged into `feature/mixar-blastoff` (Mixar-AI/mixar-backend#2024, Mixar-AI/mixar-texture-painting#2078, tracked in Mixar-AI/mixar-backend#2023); the next planned release containing them is still required:
 
 - Tool `title`s (policy 5.E): every Mixar tool gets a `title` and `annotations.title`, for every MCP client.
-- AI image and video generation (policy 4.B): with `MIXAR_MCP_HIDE_MEDIA_GENERATION=1`, which `.mcp.json` sets, Mixar leaves `image_gen`, `depth_to_image`, `video_gen`, `video_upscale` and `brush_gen` out of its tools, descriptions and guide, refuses them (including from scripts), and does not offer `mixar_ui_act`. The script above refuses to start with a Mixar that predates this, so the plugin never runs with media generation available.
+- AI image and video generation (policy 4.B): with `MIXAR_MCP_HIDE_MEDIA_GENERATION=1`, which both launcher scripts now set, Mixar leaves `image_gen`, `depth_to_image`, `video_gen`, `video_upscale` and `brush_gen` out of its tools, descriptions and guide, refuses them (including from scripts), and does not offer `mixar_ui_act`. The script above refuses to start with a Mixar that predates this, so the plugin never runs with media generation available.
 
 Until the Mixar release that carries those changes ships, the plugin does not start against an installed Mixar. The results above the launcher-script table were taken with Mixar 4.4.3, before that check existed.
 
@@ -132,5 +155,5 @@ Until the Mixar release that carries those changes ships, the plugin does not st
 - A Cowork session on this computer.
 - Linux plugin loading. The Windows plugin passed the current test above.
 - Signed out, MCP turned off, and several Mixar apps open at once through this plugin. The launcher's handling of these states is shared with the Hermes and OpenAI packages, where it was tested.
-- A successful developer-portal **Validate** and security scan. The initial
-  repository-validation error and correction are recorded above.
+- A portal report without policy holds and a successful security scan. Current
+  portal findings are recorded above.

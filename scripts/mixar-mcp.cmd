@@ -7,6 +7,8 @@ rem MIXAR_MCP_LAUNCHER, when set, names another launcher (a development or QA
 rem build of Mixar). Leave it unset for normal use. No parenthesised blocks:
 rem a path such as "Program Files (x86)" would end one early.
 setlocal
+rem Always apply the restriction, even when launched outside Claude.
+set "MIXAR_MCP_HIDE_MEDIA_GENERATION=1"
 set "LAUNCHER=%MIXAR_MCP_LAUNCHER%"
 if not "%LAUNCHER%"=="" goto check
 if "%USERPROFILE%"=="" goto nohome
@@ -14,9 +16,9 @@ set "LAUNCHER=%USERPROFILE%\.mixar\connector\mixar-mcp.cmd"
 
 :check
 if not exist "%LAUNCHER%" goto missing
-rem The plugin must not offer AI image or video generation. .mcp.json sets
-rem MIXAR_MCP_HIDE_MEDIA_GENERATION=1, which only Mixar versions that list
-rem "hide_media_generation" in the launcher's installation record honour; an
+rem The plugin must not offer AI image or video generation. The setting above
+rem is honoured only by Mixar versions that list
+rem "hide_media_generation" in the launcher's installation record; an
 rem older Mixar would ignore it, so refuse to start instead.
 for %%I in ("%LAUNCHER%") do set "RECORD=%%~dpIinstallation.json"
 findstr /l /c:"hide_media_generation" "%RECORD%" >nul 2>&1 || goto old
