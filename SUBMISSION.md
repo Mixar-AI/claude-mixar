@@ -20,9 +20,8 @@ Official instructions: https://claude.com/docs/plugins/submit.
 | Icon | `assets/icon.png` |
 
 Connect a GitHub account with write access, and allow the Claude GitHub App
-to read this repository if the portal requires it. The repository is private:
-Anthropic allows validation and review while private, but requires it public
-before publication. Private-source scanning requires agreement in the portal.
+to read this repository if the portal requires it. The repository is public
+as of 2026-11-12, so no visibility change is needed before publication.
 
 Click **Validate**. Fix all blocking findings and validate again after each
 push: validation applies to one commit. The launcher calls Mixar's installed
