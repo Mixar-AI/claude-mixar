@@ -57,7 +57,7 @@ Only generation costs Mixar credits (each job's price, and `create_layered_mater
 
 ## Interface control
 
-`mixar_ui_observe`, `mixar_ui_act` and `mixar_ui_wait` drive Mixar's own interface, and only work when the user switched on **Let AI apps control Mixar's interface** in the Connect MCP dialog. Use them only for what no other tool does. Never use OS-level computer use on Mixar.
+`mixar_ui_observe` and `mixar_ui_wait` look at Mixar's own interface, and only work when the user switched on **Let AI apps control Mixar's interface** in the Connect MCP dialog. Through this plugin Claude cannot click or type in Mixar's interface; when something needs a click, ask the user to do it. Never use OS-level computer use on Mixar.
 
 ## Security boundaries
 

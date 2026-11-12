@@ -17,4 +17,16 @@ if [ ! -x "$launcher" ]; then
     exit 1
 fi
 
+# The plugin must not offer AI image or video generation. .mcp.json sets
+# MIXAR_MCP_HIDE_MEDIA_GENERATION=1, which only Mixar versions that list
+# "hide_media_generation" in the launcher's installation record honour; an
+# older Mixar would ignore it, so refuse to start instead.
+record="$(dirname "$launcher")/installation.json"
+if ! grep -q '"hide_media_generation"' "$record" 2>/dev/null; then
+    echo "mixar-mcp: this Mixar version cannot run with Claude yet." >&2
+    echo "Update Mixar to the latest version and open it once. Then reconnect the server" >&2
+    echo "from /mcp in Claude Code." >&2
+    exit 1
+fi
+
 exec "$launcher" "$@"

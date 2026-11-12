@@ -16,7 +16,7 @@ Mixar updates itself; the plugin never downloads or updates Mixar.
 1. Open Mixar and sign in from the profile menu.
 2. Open the profile menu > **Connect MCP**.
 3. The status line should read "MCP is on · AI apps can connect to this Mixar". If it says MCP is off, click **Turn on**.
-4. Optional: switch on **Let AI apps control Mixar's interface** to allow the `mixar_ui_*` tools.
+4. Optional: switch on **Let AI apps control Mixar's interface**. Through this plugin Claude can then look at Mixar's interface (`mixar_ui_observe`, `mixar_ui_wait`), but `mixar_ui_act`, which clicks and types, is not offered, because the interface includes Mixar's image and video generators.
 
 Mixar writes the launcher this plugin starts, `~/.mixar/connector/mixar-mcp`, while it runs; with MCP off the launcher only answers that MCP is turned off. If that file is missing after these steps, quit and reopen Mixar.
 
@@ -24,7 +24,7 @@ Mixar writes the launcher this plugin starts, `~/.mixar/connector/mixar-mcp`, wh
 
 Run `/mcp` in Claude Code, select the `mixar` server and reconnect it, or start a new session. Then call `mixar_status` (or `mixar_ui_context` when `mixar_status` is not listed yet): an answer naming the desktop and the scene means Mixar is ready.
 
-If `/mcp` shows the `mixar` server as failed, the launcher did not start. The server's details in `/mcp`, or a session started with `claude --debug`, show the launcher's own message, such as the path where it looked for Mixar's launcher.
+If `/mcp` shows the `mixar` server as failed, the launcher did not start. A message that this Mixar version cannot run with Claude yet means the installed Mixar predates the plugin's support: update Mixar, open it once, and reconnect. The server's details in `/mcp`, or a session started with `claude --debug`, show the launcher's own message, such as the path where it looked for Mixar's launcher.
 
 If you also added Mixar by hand earlier (for example with `claude mcp add mixar …`), remove that entry with `claude mcp remove mixar`, so that each Mixar tool is listed once.
 

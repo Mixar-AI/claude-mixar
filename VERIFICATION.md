@@ -40,11 +40,17 @@ The command from `.mcp.json`, with `${CLAUDE_PLUGIN_ROOT}` expanded and no `MIXA
 | Default path in a home folder containing a space | Resolved |
 | Process | `exec` replaces the script |
 | `sh -n` | Passed |
+| Installation record without `"hide_media_generation"` in `features`, or no record (Mixar 4.4.3 and older) | Exit 1, empty stdout, "this Mixar version cannot run with Claude yet", update and reconnect |
+| Installation record listing `"hide_media_generation"` | Launcher started with the arguments unchanged |
 
 ## Open findings
 
-- No Mixar tool has a `title`. The Anthropic Software Directory Policy (5.E) asks for `title`, `readOnlyHint` and `destructiveHint` on every tool. The tool list comes from the Mixar app, so this needs a Mixar change.
-- `enqueue_generation` offers image and video job types (`image_gen`, `depth_to_image`, `video_gen`, `video_upscale`). The policy (4.B) does not accept software that generates images, video or audio with AI models, except design assets. This also needs a Mixar change or a written exception from Anthropic.
+Both findings from the first run are being closed in Mixar itself (Mixar-AI/mixar-backend#2024, Mixar-AI/mixar-texture-painting#2078, tracked in Mixar-AI/mixar-backend#2023):
+
+- Tool `title`s (policy 5.E): every Mixar tool gets a `title` and `annotations.title`, for every MCP client.
+- AI image and video generation (policy 4.B): with `MIXAR_MCP_HIDE_MEDIA_GENERATION=1`, which `.mcp.json` sets, Mixar leaves `image_gen`, `depth_to_image`, `video_gen`, `video_upscale` and `brush_gen` out of its tools, descriptions and guide, refuses them (including from scripts), and does not offer `mixar_ui_act`. The script above refuses to start with a Mixar that predates this, so the plugin never runs with media generation available.
+
+Until the Mixar release that carries those changes ships, the plugin does not start against an installed Mixar. The results above the launcher-script table were taken with Mixar 4.4.3, before that check existed.
 
 ## Not executed
 
