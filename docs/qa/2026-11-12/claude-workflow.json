@@ -1,0 +1,168 @@
+{
+  "marker": "QA_Claude_Crate_96e92b76",
+  "export_filename": "QA_Claude_Crate_96e92b76.glb",
+  "backend_url": "https://uat8.mixar.app",
+  "credits_before": 83165,
+  "credits_after": 83165,
+  "tool_calls": [
+    "mcp__plugin_mixar_mixar__mixar_status",
+    "mcp__plugin_mixar_mixar__mixar_guide",
+    "mcp__plugin_mixar_mixar__scene_overview",
+    "mcp__plugin_mixar_mixar__mixar_guide",
+    "mcp__plugin_mixar_mixar__mixar_guide",
+    "mcp__plugin_mixar_mixar__mixar_scenes",
+    "mcp__plugin_mixar_mixar__mixar_scene_new",
+    "mcp__plugin_mixar_mixar__scene_overview",
+    "mcp__plugin_mixar_mixar__execute_bpy_script",
+    "mcp__plugin_mixar_mixar__execute_bpy_script",
+    "mcp__plugin_mixar_mixar__render_viewport",
+    "mcp__plugin_mixar_mixar__inspect_geometry",
+    "mcp__plugin_mixar_mixar__execute_bpy_script",
+    "mcp__plugin_mixar_mixar__inspect_geometry",
+    "mcp__plugin_mixar_mixar__render_viewport",
+    "mcp__plugin_mixar_mixar__export_scene"
+  ],
+  "objects": [
+    {
+      "name": "QA_Claude_Crate_96e92b76_Braces",
+      "dimensions": [
+        1.0,
+        1.0,
+        0.9482843279838562
+      ],
+      "vertices": 40
+    },
+    {
+      "name": "QA_Claude_Crate_96e92b76_Core",
+      "dimensions": [
+        0.8799999952316284,
+        0.8799999952316284,
+        0.8799999952316284
+      ],
+      "vertices": 8
+    },
+    {
+      "name": "QA_Claude_Crate_96e92b76_Frame",
+      "dimensions": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "vertices": 96
+    },
+    {
+      "name": "QA_Claude_Crate_96e92b76_Slats",
+      "dimensions": [
+        0.9399999976158142,
+        0.9399999976158142,
+        0.8899999856948853
+      ],
+      "vertices": 200
+    }
+  ],
+  "export_bytes": 31612,
+  "restored": {
+    "mcp_enabled": false,
+    "mcp_ui_control": false
+  },
+  "visual_review": "Passed: both hero previews show a complete crate with visible slats and diagonal braces; after.png shows its new scene tab and the original scene retained.",
+  "export_results": [
+    {
+      "success": true,
+      "file": "QA_Claude_Crate_96e92b76.glb",
+      "format": "glb",
+      "mesh_count": 4,
+      "armature_count": 0,
+      "mesh_names": [
+        "QA_Claude_Crate_96e92b76_Core",
+        "QA_Claude_Crate_96e92b76_Frame",
+        "QA_Claude_Crate_96e92b76_Slats",
+        "QA_Claude_Crate_96e92b76_Braces"
+      ],
+      "file_size_bytes": 31612,
+      "folder": "downloads",
+      "reused_chosen_folder": false,
+      "clips": [],
+      "clips_requested": null,
+      "clips_missing": [],
+      "preset": {
+        "use_case": "godot",
+        "exporter": "gltf",
+        "axis_forward": "-Z",
+        "axis_up": "Y",
+        "scale": "meters",
+        "leaf_bones": false,
+        "animation_mode": "all",
+        "tangents": true,
+        "apply_modifiers": true,
+        "draco": false,
+        "image_format": "AUTO",
+        "embed_textures": true,
+        "active_scene_only": true,
+        "cameras": false,
+        "lights": false,
+        "custom_properties": false
+      },
+      "readiness_bypassed": false,
+      "residual_check_failures": 0,
+      "verification": {
+        "checked": true,
+        "method": "gltf_json",
+        "file_size_bytes": 31612,
+        "meshes": 4,
+        "nodes": 4,
+        "materials": [
+          "QA_Claude_Crate_96e92b76_WoodBrace",
+          "QA_Claude_Crate_96e92b76_WoodInner",
+          "QA_Claude_Crate_96e92b76_WoodFrame",
+          "QA_Claude_Crate_96e92b76_WoodSlat"
+        ],
+        "images": 0,
+        "images_embedded": null,
+        "animations": [],
+        "triangles": 516,
+        "dimensions_m": [
+          1,
+          1,
+          1
+        ],
+        "up_axis": "+Y",
+        "draco": false,
+        "issues": [],
+        "passed": true,
+        "mesh_instances": 4,
+        "skins": 0,
+        "skinned_meshes": 0,
+        "lights": 0,
+        "cameras": 0,
+        "scenes": 1
+      },
+      "verification_passed": true,
+      "issues": [],
+      "warnings": [],
+      "note": "Report the file name and folder kind only, never a path. Repeat every issue, warning and bypassed readiness check in your summary."
+    }
+  ],
+  "date": "2026-11-12",
+  "platform": "darwin",
+  "claude_version": "2.1.322",
+  "claude_model": "claude-opus-5-5",
+  "plugin_commit": "f7c0d2b286047ad6a512bec11db3925a2fec38a7",
+  "client_commit": "fd99da9c473217b60b7597272b0acb2329ebe600",
+  "run": "scenarios-20261112-190745",
+  "passed": true,
+  "permission_denials": [],
+  "glb_independent_check": {
+    "version": 2,
+    "meshes": 4,
+    "materials": 4,
+    "bytes": 31612,
+    "cameras": 0
+  },
+  "limitations": [
+    "Cowork untested",
+    "Windows real model workflow untested; plugin loading tested separately",
+    "Not imported in Godot",
+    "Development app on uat8; released installer still pending"
+  ]
+}

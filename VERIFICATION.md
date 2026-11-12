@@ -22,7 +22,39 @@ The Windows plugin scenario took 38 s. It used a private Claude config directory
 
 The Connect MCP screenshots were visually checked before and after the run: both show “MCP is on · AI apps can connect to this Mixar”, with the dialog and controls visible. Retained evidence: [Windows results](docs/qa/2026-11-12/windows-plugin.json), [before](docs/qa/2026-11-12/windows-connect-before.png), [after](docs/qa/2026-11-12/windows-connect-after.png).
 
-This verifies the local plugin connection and tool surface. A model-driven Claude session, Cowork, Linux plugin loading and the submission portal checks remain untested. Release support still depends on shipping the client/backend changes below.
+This verifies the local plugin connection and tool surface. Cowork, Linux plugin loading and the submission portal checks remain untested. Release support still depends on shipping the client/backend changes below.
+
+## Real Claude workflow
+
+Passed on macOS on 2026-11-12, run `scenarios-20261112-190745`, Claude Code
+2.1.322 (`claude-opus-5-5`), plugin `f7c0d2b`, client `fd99da9c4`, uat8.
+The test loads the plugin skill and its exact MCP server command in a private
+plugin copy, with discovery pinned to the isolated QA app. Because Claude's
+strict MCP mode excludes plugin-discovered servers too, the test passes that
+same server definition explicitly under `plugin:mixar:mixar`. This exercises
+the plugin's launcher and skill; the separate connection test above covers
+automatic plugin-server discovery.
+
+Claude inspected the original scene, created a new tab, built a one-metre
+crate with scripts and simple brown materials, rendered two hero previews,
+fixed a brace-contact issue, and exported only the crate as GLB for Godot.
+The export tool reported successful read-back verification with no issues or
+warnings. Independent QA scene inspection found the four crate meshes, and
+an independent GLB header/JSON read confirmed four meshes, four materials,
+31,612 bytes and no cameras. No tool permissions were denied. Mixar credits
+stayed at 83,165; Claude inference used the existing signed-in subscription.
+The QA preferences were restored and the owned app was stopped.
+
+Both hero renders and the final app screenshot were visually checked. The
+slats and diagonal braces are visible, and the new scene is separate from
+the original. [Preview](docs/qa/2026-11-12/claude-crate-preview.jpg) ·
+[Results](docs/qa/2026-11-12/claude-workflow.json).
+
+Two earlier attempts are retained locally: the first excluded the plugin
+server through an empty strict MCP config; the second completed the export
+but the harness denied the read-only `list_rules` call. The corrected
+scenario explicitly supplies the server and permits that read-only tool.
+Neither is counted as a passing test. The GLB was not opened in Godot.
 
 ## Initial baseline (before the capability check)
 
@@ -71,7 +103,7 @@ The command from `.mcp.json`, with `${CLAUDE_PLUGIN_ROOT}` expanded and no `MIXA
 
 ## Open findings
 
-Both findings from the first run are implemented and verified in the development builds (Mixar-AI/mixar-backend#2024, Mixar-AI/mixar-texture-painting#2078, tracked in Mixar-AI/mixar-backend#2023); a release containing them is still required:
+Both findings from the first run are implemented, verified and merged into `feature/mixar-blastoff` (Mixar-AI/mixar-backend#2024, Mixar-AI/mixar-texture-painting#2078, tracked in Mixar-AI/mixar-backend#2023); the next planned release containing them is still required:
 
 - Tool `title`s (policy 5.E): every Mixar tool gets a `title` and `annotations.title`, for every MCP client.
 - AI image and video generation (policy 4.B): with `MIXAR_MCP_HIDE_MEDIA_GENERATION=1`, which `.mcp.json` sets, Mixar leaves `image_gen`, `depth_to_image`, `video_gen`, `video_upscale` and `brush_gen` out of its tools, descriptions and guide, refuses them (including from scripts), and does not offer `mixar_ui_act`. The script above refuses to start with a Mixar that predates this, so the plugin never runs with media generation available.
@@ -80,7 +112,7 @@ Until the Mixar release that carries those changes ships, the plugin does not st
 
 ## Not executed
 
-- A model-driven Claude Code session using the skill and the tools.
+- A model-driven Claude Code workflow on Windows (macOS passed above).
 - A Cowork session on this computer.
 - Linux plugin loading. The Windows plugin passed the current test above.
 - Signed out, MCP turned off, and several Mixar apps open at once through this plugin. The launcher's handling of these states is shared with the Hermes and OpenAI packages, where it was tested.

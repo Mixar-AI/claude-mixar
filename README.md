@@ -15,7 +15,7 @@ The plugin has two parts:
 
 You do not need a Mixar API key, a token or a separate Python or Node.js installation. The launcher runs on the Python that ships inside Mixar.
 
-The plugin currently requires the development build from [client PR #2078](https://github.com/Mixar-AI/mixar-texture-painting/pull/2078) and a backend with [PR #2024](https://github.com/Mixar-AI/mixar-backend/pull/2024). The installed Mixar 4.4.3 release lacks the required media-generation restriction and the plugin refuses to start with it. See [Verification](VERIFICATION.md) for the tested builds and release limitation.
+The plugin currently requires the development build from [client PR #2078](https://github.com/Mixar-AI/mixar-texture-painting/pull/2078) and a backend with [PR #2024](https://github.com/Mixar-AI/mixar-backend/pull/2024). Both changes are merged for the next planned release. The installed Mixar 4.4.3 release lacks the required media-generation restriction and the plugin refuses to start with it. See [Verification](VERIFICATION.md) for the tested builds and release limitation.
 
 ## Set up
 
