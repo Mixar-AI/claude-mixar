@@ -73,7 +73,10 @@ the planned release is published.
 - Production deployment and a supported released installer are still pending.
   Released Mixar 4.4.3 does not carry the required capability.
 - Minimum supported installer version / link: **pending the next release**.
-- Portal validation, security scan and submission: **not performed**.
+- Portal validation: first attempt stopped with “Couldn’t validate that repository”.
+  Content-rewriting `.gitattributes` rules were removed; select **Re-validate**
+  on the Source step with branch `main` and the plugin path left blank (root).
+  Security scan and completed submission remain unconfirmed.
 - Keep automatic publishing off until the released app/backend have been
   verified together. Review the contact, data handling and compliance answers
   before **Submit for review**. Passing checks is separate from **Publish**.

@@ -1,3 +1,0 @@
-# The Windows launcher must reach cmd.exe with CRLF line endings; the POSIX one with LF.
-*.cmd text eol=crlf
-scripts/mixar-mcp text eol=lf

@@ -1,5 +1,21 @@
 # Verification
 
+## Repository validation correction (2026-11-12)
+
+The first developer-portal attempt stopped with “Couldn’t validate that repository”.
+The repository contained `text`/`eol` rules in `.gitattributes`; Anthropic's
+[pre-submission checklist](https://claude.com/docs/plugins/pre-submission-checklist)
+rejects attributes that rewrite file contents. Those rules have been removed.
+The Windows launcher is now stored with CRLF directly in Git, matching the
+SHA-256 of the launcher in the successful Windows run recorded below; the POSIX
+launcher remains LF. When editing launchers, preserve these existing line endings
+and stage with `git -c core.autocrlf=false add --renormalize scripts/mixar-mcp scripts/mixar-mcp.cmd`.
+
+The tracked tree was also checked for invalid UTF-8, unsupported path characters,
+trailing dots/spaces, Windows device names, case collisions, symlinks, submodules,
+and LFS pointers; none were found. Local and remote refs contain no replace refs.
+Portal re-validation is still required against the corrected commit.
+
 ## Current plugin: macOS and Windows
 
 Verified on 2026-11-12 with Claude Code 2.1.322 and the development Mixar build containing the media-generation restriction. The macOS run passed in the original session; the Windows run completed after resuming it.
@@ -116,4 +132,5 @@ Until the Mixar release that carries those changes ships, the plugin does not st
 - A Cowork session on this computer.
 - Linux plugin loading. The Windows plugin passed the current test above.
 - Signed out, MCP turned off, and several Mixar apps open at once through this plugin. The launcher's handling of these states is shared with the Hermes and OpenAI packages, where it was tested.
-- The developer portal's **Validate** and security scan.
+- A successful developer-portal **Validate** and security scan. The initial
+  repository-validation error and correction are recorded above.
