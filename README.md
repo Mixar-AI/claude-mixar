@@ -1,6 +1,6 @@
 # Mixar for Claude
 
-Connect Claude to [Mixar](https://www.mixar.app), the AI-native 3D editor built on Blender 5.2. With this plugin Claude can read and edit the 3D scene open in the Mixar desktop app, build objects step by step, apply realistic materials, generate 3D models, textures, rigs and animation, render previews and turntables, and export game-ready assets for Unity, Unreal and Godot.
+Connect Claude to [Mixar](https://www.mixar.app), the AI-native 3D editor built on Blender. With this plugin Claude can read and edit the 3D scene open in the Mixar desktop app, build objects step by step, apply realistic materials, generate 3D models, textures, rigs and animation, render previews and turntables, and export game-ready assets for Unity, Unreal and Godot.
 
 The plugin has two parts:
 
@@ -15,7 +15,7 @@ The plugin has two parts:
 
 You do not need a Mixar API key, a token or a separate Python or Node.js installation. The launcher runs on the Python that ships inside Mixar.
 
-The plugin currently requires the development build from [client PR #2078](https://github.com/Mixar-AI/mixar-texture-painting/pull/2078) and a backend with [PR #2024](https://github.com/Mixar-AI/mixar-backend/pull/2024). Both changes are merged for the next planned release. The installed Mixar 4.4.3 release lacks the required media-generation restriction and the plugin refuses to start with it. See [Verification](VERIFICATION.md) for the tested builds and release limitation.
+Use the [latest Mixar desktop release](https://github.com/Mixar-AI/mixar-app/releases/latest). The plugin starts the launcher provided by your installed copy of Mixar and checks for the `hide_media_generation` capability. The first public installer with this capability was 4.4.7. Updating Mixar and opening it once refreshes the launcher. See the [verification results](VERIFICATION.md) for platform coverage.
 
 ## Set up
 
@@ -88,9 +88,9 @@ This plugin is an adapter: it stores no data and sends nothing itself. Everythin
 
 | Platform | Status | Launcher the plugin starts |
 |----------|--------|----------------------------|
-| macOS | Verified in Claude Code with the development build above | `~/.mixar/connector/mixar-mcp` |
+| macOS | Verified in Claude Code with the November 12 development build ([results](VERIFICATION.md)) | `~/.mixar/connector/mixar-mcp` |
 | Linux | Expected to work, not yet verified | `~/.mixar/connector/mixar-mcp` (written when Mixar first runs) |
-| Windows | Verified in Claude Code with the development build above | `%USERPROFILE%\.mixar\connector\mixar-mcp.cmd` |
+| Windows | Verified in Claude Code with the November 12 development build ([results](VERIFICATION.md)) | `%USERPROFILE%\.mixar\connector\mixar-mcp.cmd` |
 
 The same `.mcp.json` works on both verified platforms. Claude Code 2.1.322 resolves the extensionless `scripts/mixar-mcp` command to its `.cmd` counterpart on Windows.
 

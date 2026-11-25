@@ -62,8 +62,8 @@ Reviewer note:
 > and force that restriction on. The bundled images are documentation and branding
 > only; no script executes them. Our portal currently marks the organization as
 > unverified. Please confirm eligibility and the organization-verification steps
-> required for this local MCP integration. Publication is also pending the planned
-> Mixar release containing the required capability.
+> required for this local MCP integration. The public Mixar desktop installer now
+> includes the required launcher capability.
 
 ## Data handling answers
 
@@ -98,18 +98,17 @@ the plugin as processing no personal data simply because the adapter stores none
 Provide reviewers a dedicated standard Mixar account with sample data through
 the portal's private reviewer channel when requested. Never put reviewer
 credentials in this repository. Do not supply the shared QA account or dev-bypass
-credentials. Record a supported installer version and download link below once
-the planned release is published.
+credentials.
 
 ## Release and portal status
 
-- Client PR #2078 and backend PR #2024 are merged into
-  `feature/mixar-blastoff` for the next planned release, per the owner's choice.
+- Client PR #2078 and backend PR #2024 merged into
+  `feature/mixar-blastoff`.
 - Client merge: `2fc0fef0781eb5fb45ab37317feb36ca1c0d6829`.
 - Backend merge: `8f0f256e61bc12f89c6240faee7a16d167a6ce60`.
-- Production deployment and a supported released installer are still pending.
-  Released Mixar 4.4.3 does not carry the required capability.
-- Minimum supported installer version / link: **pending the next release**.
+- The first public installer with the required launcher capability was
+  [Mixar 4.4.7](https://github.com/Mixar-AI/mixar-app/releases/tag/v4.4.7).
+  Reviewers should use the [latest public installer](https://github.com/Mixar-AI/mixar-app/releases/latest).
 - Portal validation now completes with policy holds and informational notices
   described above. Select **Re-validate** on the Source step after fixes, using
   branch `main` and a blank plugin path. Security scan and completed submission
