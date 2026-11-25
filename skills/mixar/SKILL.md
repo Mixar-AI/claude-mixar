@@ -5,7 +5,7 @@ description: Use when the user wants to build, edit, inspect, texture, rig, anim
 
 # Mixar through MCP
 
-Mixar is an AI-native 3D editor built on Blender 5.2. This plugin starts the MCP launcher that Mixar installs for the signed-in user (`~/.mixar/connector/mixar-mcp`). It does not install Mixar, sign in or turn MCP on. A tool listing proves nothing about readiness: when Mixar is closed or signed out, the launcher answers with the tool list it saved last time.
+Mixar is an AI-native 3D editor built on Blender. This plugin starts the MCP launcher that Mixar installs for the signed-in user (`~/.mixar/connector/mixar-mcp`). It does not install Mixar, sign in or turn MCP on. A tool listing proves nothing about readiness: when Mixar is closed or signed out, the launcher answers with the tool list it saved last time.
 
 ## First run on a new computer
 

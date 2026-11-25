@@ -1,5 +1,17 @@
 # Verification
 
+## Public Mixar 4.5.2 on macOS (2026-11-25)
+
+The plugin command from `.mcp.json` started the default per-user launcher for
+the installed [Mixar 4.5.2 release](https://github.com/Mixar-AI/mixar-app/releases/tag/v4.5.2).
+The installation record pointed to `/Applications/Mixar.app` and listed
+`hide_media_generation`. A read-only MCP client initialized over stdio. After
+Mixar started, `mixar_status` returned `connected: true` and `tools/list`
+returned 75 tools, including `get_generation_params` and `enqueue_generation`.
+The list omitted `mixar_ui_act` and the restricted media job types. This check
+covered the launcher, catalog and live connection. The Windows and scene
+workflow results below used the November 12 development build.
+
 ## Repository validation correction (2026-11-12)
 
 The first developer-portal attempt stopped with “Couldn’t validate that repository”.
@@ -34,7 +46,7 @@ A fresh Windows execution check could not run: the shared QA lane is held by the
 Blender 5.3 build/GUI QA task. The earlier Windows end-to-end result below predates
 this small launcher change. Portal re-validation of this cleanup is pending.
 
-## Current plugin: macOS and Windows
+## Development build on macOS and Windows
 
 Verified on 2026-11-12 with Claude Code 2.1.322 and the development Mixar build containing the media-generation restriction. The macOS run passed in the original session; the Windows run completed after resuming it.
 
@@ -60,7 +72,7 @@ The Connect MCP screenshots were visually checked before and after the run: both
 
 ![Connect MCP after the Windows test](docs/qa/2026-11-12/windows-connect-after.png)
 
-This verifies the local plugin connection and tool surface. Cowork and Linux plugin loading remain untested. Portal validation now reaches policy review; see the findings below. Release support still depends on shipping the client/backend changes below.
+This verifies the local plugin connection and tool surface. Cowork and Linux plugin loading remain untested. Portal validation now reaches policy review; see the findings below.
 
 ## Real Claude workflow
 
@@ -140,14 +152,14 @@ The command from `.mcp.json`, with `${CLAUDE_PLUGIN_ROOT}` expanded and no `MIXA
 | Installation record without `"hide_media_generation"` in `features`, or no record (Mixar 4.4.3 and older) | Exit 1, empty stdout, "this Mixar version cannot run with Claude yet", update and reconnect |
 | Installation record listing `"hide_media_generation"` | Launcher started with the arguments unchanged |
 
-## Open findings
+## Resolution of the initial findings
 
-Both findings from the first run are implemented, verified and merged into `feature/mixar-blastoff` (Mixar-AI/mixar-backend#2024, Mixar-AI/mixar-texture-painting#2078, tracked in Mixar-AI/mixar-backend#2023); the next planned release containing them is still required:
+Both findings from the first run are implemented, verified and merged into `feature/mixar-blastoff` (Mixar-AI/mixar-backend#2024, Mixar-AI/mixar-texture-painting#2078, tracked in Mixar-AI/mixar-backend#2023). The changes address two findings:
 
 - Tool `title`s (policy 5.E): every Mixar tool gets a `title` and `annotations.title`, for every MCP client.
 - AI image and video generation (policy 4.B): with `MIXAR_MCP_HIDE_MEDIA_GENERATION=1`, which both launcher scripts now set, Mixar leaves `image_gen`, `depth_to_image`, `video_gen`, `video_upscale` and `brush_gen` out of its tools, descriptions and guide, refuses them (including from scripts), and does not offer `mixar_ui_act`. The script above refuses to start with a Mixar that predates this, so the plugin never runs with media generation available.
 
-Until the Mixar release that carries those changes ships, the plugin does not start against an installed Mixar. The results above the launcher-script table were taken with Mixar 4.4.3, before that check existed.
+The initial baseline above used Mixar 4.4.3 before the plugin added its capability check. The first published installer with that capability was Mixar 4.4.7.
 
 ## Not executed
 
